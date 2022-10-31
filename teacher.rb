@@ -1,12 +1,11 @@
 require './person'
 
+Class Teacher < Person
 
-Class Teacher < Person 
-
-def initialize(specialization , age, name = 'Unknown', parent_permission: true)
-    @specialization = specialization 
+def initialize(specialization, _age, _name = 'Unknown', parent_permission: true)
+  @specialization = specialization
 end
 
 def can_use_services?
-    true
+  true
 end
