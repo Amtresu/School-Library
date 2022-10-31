@@ -1,13 +1,12 @@
 require './person'
 
-Class Student < Person
+class Student < Person
+  def initialize(classroom, age, name = 'Unknown', parent_permission: true)
+    @classroom = classroom
+    super(age, name, parent_permission)
+  end
 
-def initialize(classroom, _age, _name = 'Unknown', parent_permission: true)
-  @classroom = classroom
-end
-
-def play_hooky
+  def play_hookey
     '¯(ツ)/¯'
   end
-  
 end
