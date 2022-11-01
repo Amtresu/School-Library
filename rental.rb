@@ -1,8 +1,9 @@
-require_relative './book'
-require_relative './person'
+require './book'
+require './person'
 
 class Rental
   attr_reader :book, :person
+  attr_accessor :date
 
   def initalize(date, book, person)
     @date = date
@@ -13,9 +14,4 @@ class Rental
     @book = book
     book.rentals.push(self)
   end
-
-  attr_accessor :date
-
-  belongs_to :book
-  belongs_to :person
 end
