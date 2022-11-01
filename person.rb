@@ -1,4 +1,5 @@
 require './nameable'
+require_relative './rental'
 
 class Person < Nameable
   attr_accessor :age, :name
@@ -25,4 +26,6 @@ class Person < Nameable
   def can_use_services?
     of_age?
   end
+
+  has_many :rental
 end
