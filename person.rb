@@ -1,4 +1,5 @@
 require './nameable'
+require './rental'
 
 class Person < Nameable
   attr_accessor :age, :name
@@ -9,6 +10,7 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
+    @rentals = []
     super()
   end
 
@@ -24,5 +26,9 @@ class Person < Nameable
 
   def can_use_services?
     of_age?
+  end
+
+  def add_rentals=(book, date)
+    Rental.new(book, self, date)
   end
 end
