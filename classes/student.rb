@@ -1,14 +1,14 @@
-require './person'
-require './classroom'
+require_relative './person'
 
 class Student < Person
-  belongs_to :classroom
   attr_reader :classroom
 
-  def initialize(classroom, age, name = 'Unknown', parent_permission: true)
+  def initialize(age, parent_permission, name)
     @classroom = classroom
-    super(age, name, parent_permission)
+    @type = 'Student'.delete_prefix('"').delete_suffix('"')
+    super(age, parent_permission, name)
   end
+  attr_accessor :type
 
   def play_hookey
     '¯(ツ)/¯'
