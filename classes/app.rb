@@ -40,7 +40,7 @@ class App
     print 'Enter number of the operation: '
   end
 
-  def option(input)
+  def option(input) # rubocop:disable Metrics/CyclomaticComplexity
     case input
     when '1'
       list_books
@@ -55,10 +55,8 @@ class App
     when '6'
       list_rentals
     when '7'
-      puts 'Thanks for using my school library app!'
+      puts 'Thanks for using the school library!'
       exit
-    else
-      'Enter digit from 1 to 7'
     end
   end
 
@@ -97,7 +95,6 @@ class App
       return(create_person)
     end
     person_condition(person, age, name)
-    puts 'Person Created Successfully'
     back_to_menu
   end
 
