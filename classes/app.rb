@@ -80,7 +80,7 @@ class App
   def create_person
     puts '1 - Create Student  2 - Create Teacher'
     person = gets.chomp
-    if person >= "3"
+    if person >= '3'
       puts 'invalid selection, please select student or teacher'
       return(create_person)
     end
