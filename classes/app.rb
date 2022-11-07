@@ -4,9 +4,16 @@ require_relative './person'
 require_relative './rental'
 require_relative './student'
 require_relative './teacher'
+require './modules/ModBook'
+require './modules/ModPeople'
+require './modules/ModRentals'
 require 'date'
 
 class App
+  include ModBook
+  include ModPeople
+  include ModRentals
+
   def initialize
     @rentals = []
     @books = []
@@ -43,125 +50,20 @@ class App
   def option(input) # rubocop:disable Metrics/CyclomaticComplexity
     case input
     when '1'
-      list_books
+      App.new.list_books(@books)
     when '2'
-      list_people
+      App.new.list_people(@people)
     when '3'
-      create_person
+      App.new.create_person(@people)
     when '4'
-      create_book
+      App.new.create_book(@books)
     when '5'
-      create_rental
+      App.new.create_rental(@books, @people, @rentals)
     when '6'
-      list_rentals
+      App.new.list_rentals(@books, @people, @rentals)
     when '7'
       puts 'Thanks for using the school library!'
       exit
-    end
-  end
-
-  def list_books
-    if @books.length.zero?
-      puts 'There are no books'
-    else
-      @books.each_with_index { |book, idx| puts "#{idx}) Book: #{book.title}, Author: #{book.author}" }
-    end
-    back_to_menu
-  end
-
-  def list_people
-    puts 'No person available' if @people.length.zero?
-    @people.each { |person| puts "[#{person.type}] Name: #{person.name} Age: #{person.age}" }
-    back_to_menu
-  end
-
-  def create_person
-    puts '1 - Create Student  2 - Create Teacher'
-    person = gets.chomp
-    if person >= '3'
-      puts 'invalid selection, please select student or teacher'
-      return(create_person)
-    end
-    print 'Insert age: '
-    age = gets.chomp
-    if age.empty?
-      puts 'No age submitted, please try again'
-      return(create_person)
-    end
-    print 'Insert name: '
-    name = gets.chomp.capitalize
-    if name.empty?
-      puts 'No name submitted, please try again'
-      return(create_person)
-    end
-    person_condition(person, age, name)
-    back_to_menu
-  end
-
-  def person_condition(person, age, name)
-    case person
-    when '1'
-      print 'Has parents permission [Y/N]: '
-      permit = gets.chomp.downcase
-      parent_permission = permit != 'n'
-      @people.push(Student.new(age, parent_permission, name))
-    when '2'
-      print 'Insert specialization: '
-      specialization = gets.chomp
-      teacher = Teacher.new(specialization, age, name)
-      @people.push(teacher)
-    end
-  end
-
-  def create_book
-    print 'Enter Book Title: '
-    title = gets.chomp
-    if title.empty?
-      puts 'No title submitted, please try again'
-      return(create_book)
-    end
-    print 'Enter Book Author: '
-    author = gets.chomp
-    if author.empty?
-      puts 'No author submitted, please try again'
-      return(create_book)
-    end
-    book = Book.new(title, author)
-    @books.push(book)
-    puts 'Book Successfully Created'
-    back_to_menu
-  end
-
-  def create_rental
-    if @books.size.zero?
-      puts 'No Books Available'
-    elsif @people.size.zero?
-      puts 'No Person Available'
-    else
-      puts 'Select a book from the following list by number'
-      @books.each_with_index { |book, index| puts "#{index}) Book Title: #{book.title}, Author: #{book.author}" }
-      rental_book = gets.chomp.to_i
-      puts 'Select a person from the following list by number (not id)'
-      @people.each_with_index do |person, index|
-        puts "#{index}) #{[person.type]} Name: #{person.name} Age: #{person.age} Id: #{person.id}"
-      end
-      rental_person = gets.chomp.to_i
-      puts 'Enter date'
-      date = gets.chomp
-      rental_detail = Rental.new(@people[rental_person], @books[rental_book], date)
-      @rentals.push(rental_detail)
-      puts 'Rental Successfully Created'
-    end
-    back_to_menu
-  end
-
-  def list_rentals
-    puts 'Select id of any person'
-    @people.each { |i| puts "[#{i.type.to_i}] id: #{i.id}, Person: #{i.name}" }
-    print 'Person id: '
-    person_id = gets.chomp
-    @rentals.each do |i|
-      puts "Date: #{i.date}, Book: '#{i.book.title}' by #{i.book.author}" if i.person.id.to_i == person_id.to_i
     end
   end
 end
