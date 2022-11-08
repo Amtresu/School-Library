@@ -21,12 +21,12 @@ module ModRentals
     rental_storage = fetch_storage('rentals')
     puts 'Select a book to rent'
     books.each_with_index { |book, index| puts "#{index}) Book Title: #{book.title}, Author: #{book.author}" }
-    rental_book = gets.chomp
+    rental_book = gets.chomp.to_i
     puts 'Select Person by their ID'
     people.each_with_index do |person, index|
       puts "#{index}) #{[person.type]} Name: #{person.name} Age: #{person.age} Id: #{person.id}"
     end
-    rental_person = gets.chomp
+    rental_person = gets.chomp.to_i
     puts 'Enter date of Rental'
     date = gets.chomp
     rental_item = Rental.new(people[rental_person], books[rental_book], date)
