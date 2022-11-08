@@ -1,14 +1,17 @@
 require './classes/book'
 require './classes/app'
+require_relative './local_storage'
 
 module ModBook
-  def list_books(books)
+  include LocalStorage
+
+  def display_books(books)
     if books.length.zero?
       puts 'There are no books'
     else
       books.each_with_index { |book, idx| puts "#{idx}) Book: #{book.title}, Author: #{book.author}" }
     end
-    back_to_menu
+    menu_return
   end
 
   def create_book(books)
@@ -26,7 +29,11 @@ module ModBook
     end
     book = Book.new(title, author)
     books.push(book)
+    book_data = { title: book.title, author: book.author }
+    stored_books = fetch_storage('books')
+    stored_books.push(book_data)
+    update_storage('books', stored_books)
     puts 'Book Successfully Created'
-    back_to_menu
+    menu_return
   end
 end

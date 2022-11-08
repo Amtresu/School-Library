@@ -1,31 +1,43 @@
 require './classes/book'
 require './classes/person'
+require './classes/rental'
+require_relative './local_storage'
 
 module ModRentals
-  def create_rental(books, people, rentals)
+  include LocalStorage
+
+  def space_checker(books, people, rentals)
     if books.size.zero?
-      puts 'No Books Available'
+      puts 'No Books Available to Rent'
     elsif people.size.zero?
-      puts 'No Person Available'
+      puts 'No People Available to Rent to'
     else
-      puts 'Select a book from the following list by number'
-      books.each_with_index { |book, index| puts "#{index}) Book Title: #{book.title}, Author: #{book.author}" }
-      rental_book = gets.chomp.to_i
-      puts 'Select a person from the following list by number (not id)'
-      people.each_with_index do |person, index|
-        puts "#{index}) #{[person.type]} Name: #{person.name} Age: #{person.age} Id: #{person.id}"
-      end
-      rental_person = gets.chomp.to_i
-      puts 'Enter date'
-      date = gets.chomp
-      rental_detail = Rental.new(people[rental_person], books[rental_book], date)
-      rentals.push(rental_detail)
-      puts 'Rental Successfully Created'
+      create_rental(books, people, rentals)
     end
-    back_to_menu
+    menu_return
   end
 
-  def list_rentals(_books, people, rentals)
+  def create_rental(books, people, rentals)
+    rental_storage = fetch_storage('rentals')
+    puts 'Select a book to rent'
+    books.each_with_index { |book, index| puts "#{index}) Book Title: #{book.title}, Author: #{book.author}" }
+    rental_book = gets.chomp.to_i
+    puts 'Select Person by their ID'
+    people.each_with_index do |person, index|
+      puts "#{index}) #{[person.type]} Name: #{person.name} Age: #{person.age} Id: #{person.id}"
+    end
+    rental_person = gets.chomp.to_i
+    puts 'Enter date of Rental'
+    date = gets.chomp
+    rental_item = Rental.new(people[rental_person], books[rental_book], date)
+    rental_data = { date: date, book_index: rental_book, person_index: rental_person }
+    rentals.push(rental_item)
+    rental_storage.push(rental_data)
+    update_storage('rentals', rental_storage)
+    puts 'Rental Successfully Created'
+  end
+
+  def display_rentals(rentals, people)
     puts 'Select id of any person'
     people.each { |i| puts "[#{i.type.to_i}] id: #{i.id}, Person: #{i.name}" }
     print 'Person id: '
