@@ -1,0 +1,26 @@
+[
+  {
+    "id": 26,
+    "name": "Kyle",
+    "age": "15",
+    "class_name": "Student"
+  },
+  {
+    "id": 58,
+    "name": "Benny",
+    "age": "30",
+    "class_name": "Teacher"
+  },
+  {
+    "id": 100,
+    "name": "Happy",
+    "age": "12",
+    "class_name": "Student"
+  },
+  {
+    "id": 63,
+    "name": "Conor",
+    "age": "25",
+    "class_name": "Student"
+  }
+]

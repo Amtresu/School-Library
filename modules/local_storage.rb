@@ -2,16 +2,16 @@ require 'json'
 
 module LocalStorage
   def fetch_storage(file)
-    file_path = "./data/#{file}.json"
-    File.new(file_path, 'w+') unless File.exist?(file_path)
-    File.write(file_path, '[]') if File.empty?(file_path)
-    contents = File.read(file_path)
-    JSON.parse(contents)
+    path = "./data/#{file}.json"
+    File.new(path, 'w+') unless File.exist?(path)
+    File.write(path, '[]') if File.empty?(path)
+    file_contents = File.read(path)
+    JSON.parse(file_contents)
   end
 
   def update_storage(file, data)
-    json_data = JSON.pretty_generate(data)
-    File.write("./data/#{file}.json", json_data)
+    file_data = JSON.pretty_generate(data)
+    File.write("./data/#{file}.json", file_data)
   end
 
   def fetch_books
