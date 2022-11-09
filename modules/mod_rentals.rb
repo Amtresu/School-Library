@@ -43,7 +43,6 @@ module ModRentals
     print 'Person id: '
     person_id = gets.chomp.to_i
 
- 
     rentals.each do |i|
       puts "Date: #{i.date}, Book: '#{i.book.title}' by #{i.book.author}" if i.person.id.to_i == person_id.to_i
     end
