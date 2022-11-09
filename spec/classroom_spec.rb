@@ -21,4 +21,3 @@ describe Classroom do
     end
   end
 end
-

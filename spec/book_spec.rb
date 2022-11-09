@@ -22,7 +22,7 @@ describe Book do
 
     context 'testing book methods' do
       it 'should add a book to a rental' do
-        @Conor = Person.new(25, true, 'Conor')
+        @conor = Person.new(25, true, 'Conor')
         @book.add_rentals(@conor, '1990')
         rentals = @book.rentals.size
         expect(rentals).to eq 1
