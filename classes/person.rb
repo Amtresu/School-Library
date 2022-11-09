@@ -16,7 +16,7 @@ class Person < Nameable
   end
 
   attr_reader :id, :rentals
-  attr_accessor :name, :age
+  attr_accessor :name, :age, :parent_permission
 
   def of_age?
     @age >= 18
@@ -26,7 +26,7 @@ class Person < Nameable
     of_age?
   end
 
-  def add_rentals=(book, date)
+  def add_rentals(book, date)
     Rental.new(book, self, date)
   end
 

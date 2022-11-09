@@ -8,7 +8,7 @@ class Student < Person
     @type = 'Student'.delete_prefix('"').delete_suffix('"')
     super(age, parent_permission, name)
   end
-  attr_accessor :type
+  attr_accessor :type, :parent_permission
 
   def play_hookey
     '¯(ツ)/¯'

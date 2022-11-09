@@ -6,7 +6,7 @@ class Teacher < Person
     @type = 'Teacher'.delete_prefix('"').delete_suffix('"')
     super(age, parent_permission, name)
   end
-  attr_accessor :type
+  attr_accessor :type, :specialization
 
   def can_use_services?
     true

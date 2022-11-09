@@ -28,7 +28,7 @@ module ModRentals
     end
     rental_person = gets.chomp
     puts 'Enter date of Rental'
-    date = gets.chomp
+    date = gets.chomp.to_i
     rental_item = Rental.new(people[rental_person], books[rental_book], date)
     rental_data = { date: date, book_index: rental_book, person_index: rental_person }
     rentals.push(rental_item)
@@ -36,14 +36,14 @@ module ModRentals
     update_storage('rentals', rental_storage)
     puts 'Rental Successfully Created'
   end
-end
 
-def display_rentals(rentals, people)
-  puts 'Select the ID of a person.'
-  people.each { |i| puts "[#{i.type.to_i}] id: #{i.id}, Person: #{i.name}" }
-  print 'Person id: '
-  person_id = gets.chomp
-  rentals.each do |i|
-    puts "Date: #{i.date}, Book: '#{i.book.title}' by #{i.book.author}" if i.person.id.to_i == person_id.to_i
+  def display_rentals(rentals, people)
+    puts 'Select the ID of a person.'
+    people.each { |i| puts "[#{i.type.to_i}] id: #{i.id}, Person: #{i.name}" }
+    print 'Person id: '
+    person_id = gets.chomp.to_i
+    rentals.each do |i|
+      puts "Date: #{i.date}, Book: '#{i.book.title}' by #{i.book.author}" if i.person.id.to_i == person_id.to_i
+    end
   end
 end
